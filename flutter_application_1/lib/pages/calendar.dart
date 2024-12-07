@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Calendar extends StatefulWidget {
+  const Calendar({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Calendar> createState() => _CalendarState();
 }
 
-class _HomeState extends State<Home> {
+class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text(
-          "Ini Home",
+          "Ini Calendar",
           style: TextStyle(fontSize: 24),
         ),
       ),

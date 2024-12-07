@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Untuk navigasi
+import 'package:get/get.dart';
+import 'package:flutter_application_1/pages/home.dart';
+import 'package:flutter_application_1/pages/calendar.dart';
+import 'package:flutter_application_1/pages/profile.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -9,16 +12,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _selectedIndex = 0; // Menyimpan tab aktif
+  int _selectedIndex = 0;
 
-  // List halaman untuk setiap tab
+  // List halaman
   final List<Widget> _pages = [
-    const Center(child: Text("Home", style: TextStyle(fontSize: 24))),
-    const Center(child: Text("Calendar", style: TextStyle(fontSize: 24))),
-    const Center(child: Text("Profile", style: TextStyle(fontSize: 24))),
+    const Home(),
+    const Calendar(),
+    const Profile(),
   ];
 
-  // Fungsi untuk logout
   void _logout(BuildContext context) {
     showDialog(
       context: context,
@@ -27,15 +29,13 @@ class _DashboardState extends State<Dashboard> {
         content: const Text('Apakah Anda yakin ingin logout?'),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Tutup dialog
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text('Batal'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Tutup dialog
-              Get.offAllNamed('/login'); // Kembali ke login
+              Navigator.of(context).pop();
+              Get.offAllNamed('/login');
             },
             child: const Text('Logout'),
           ),
@@ -53,52 +53,33 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              _logout(context); // Dialog logout
+              _logout(context);
             },
           ),
         ],
       ),
-      body: _pages[_selectedIndex], // Tampilkan halaman berdasarkan tab aktif
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: Icon(
-                Icons.home,
-                color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = 0; // Pindah ke tab Home
-                });
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.calendar_today,
-                color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = 1; // Pindah ke tab Calendar
-                });
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.person,
-                color: _selectedIndex == 2 ? Colors.blue : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = 2; // Pindah ke tab Profile
-                });
-              },
-            ),
-          ],
-        ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: "Calendar",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
       ),
     );
   }
